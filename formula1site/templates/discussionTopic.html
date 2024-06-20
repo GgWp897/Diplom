@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .user-info {
+    font-size: 15px; 
+    margin-bottom: -5px;
+    }
+    @media only screen and (max-width: 768px) {
+        .messenger_card {
+            padding: 20px; 
+        }
+
+        .title {
+            font-size: 24px; 
+        }
+
+        .subtitle {
+            font-size: 20px; 
+        }
+
+        .user-info {
+            font-size: 12px; 
+        }
+        #message-text { 
+            resize: none;
+            padding: 10px;
+            font-size: 1.5vw;
+            border-radius: 10px;
+            border: 0px solid black;
+            margin-top: 1%;
+            font-size: 15px;
+        }
+
+        #send-button {
+            font-size: 14px; 
+            width: 80px;
+            height: 80px; 
+            margin-top: -20px; 
+        }
+
+        .message-image {
+            max-width: 50%; 
+            display: block; 
+            margin-top: 10px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+
+        #send{
+            font-size: 40px;
+            margin-left: -15px;
+        }
+
+        #foto{
+            font-size: 100px; 
+            cursor: pointer;
+        }
+    }
+
+    #message-text { 
+        resize: none;
+        padding: 10px;
+        font-size: 1.5vw;
+        border-radius: 18px;
+        border: 3px solid black;
+        margin-top: 1%;
+    }
+
+    .message-image {
+        max-width: 50%; 
+        display: block; 
+        margin-top: 10px; 
+        margin-left: auto; 
+        margin-right: auto; 
+        border-radius: 18px;
+    }
+
+    #send{
+        margin-bottom: -10px;
+    }
+
+    #foto{
+        font-size: 60px; 
+        cursor: pointer;
+    }
+</style>
+
+<div class="messenger">
+    <div class="messenger_card">
+        <div style="margin-top: 8%; margin-bottom: 150px;">
+            <h1 class="title">{{ topic.title }}</h1>
+            <h2 class="subtitle">{{ topic.content }}</h2>
+            <ul class="message-list">
+                {% for statement in statements %}
+                    <li>
+                        <div style="border-radius: 18px;" class="message {% if statement.user == user %}user-message{% else %}other-user-message{% endif %}">
+                            {{ statement.full_text }}
+                            {% if statement.image %}
+                                <p class="message-image-container">
+                                    <img src="{{ statement.image.url }}" alt="Statement Image" class="message-image"> 
+                                </p>
+                            {% endif %}
+                            <p class="user-info"><img style="width: 48px; height: 48px; border-radius: 100%;" src="{{ statement.user.image.url }}" alt="User Avatar" />&nbsp;&nbsp;{{ statement.user.nickname }}&nbsp;&nbsp;&nbsp;{{ statement.user.status }}&nbsp;&nbsp;&nbsp;{{ statement.date }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="message-form-container">
+            <form method="POST" id="add_message" enctype="multipart/form-data" class="message-form">
+                {% csrf_token %}
+                <label for="file-upload" class="file-input-label"><p id="foto">&#128247;</p></label>
+                <input id="file-upload" type="file" name="image" class="custom-file-input" style="display: none;" />
+                <textarea cols="60" rows="1" id="message-text" name="full_text" placeholder="Сообщение" required></textarea>
+                <button id="send-button" type="submit" style="font-size: 66px; cursor: pointer; display: inline-block; background-color: #33333300;" class="submit-button"><p id="send">&#x2B06;</p></button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

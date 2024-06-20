@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .custom-file-upload {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-align: center;
+    }
+
+    .custom-file-upload-label {
+        color: black;
+    }
+    
+    .custom-file-upload-label:hover {
+        cursor: pointer;
+    }
+    
+    .custom-file-input {
+        display: none;
+    }
+
+    button {
+        padding: 10px 15px;
+        background-color: #ffffff;
+        color: #000000; 
+        border: 2px solid #000000; 
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.7s; 
+    }
+    
+    button:hover {
+        background-color: #000000; 
+        color: #ffffff; 
+        border-color: #ffffff; 
+    }
+    
+    #card-container {
+        display: flex;
+        padding: 10px;
+        justify-content: space-between; 
+        flex-wrap: wrap; 
+    }
+    
+    #card-left,
+    #card-right {
+        width: 48%; 
+        box-shadow: 10px 10px 15px 15px rgba(101, 101, 101, 0.984);
+        border-radius: 8px;
+        padding: 20px; 
+        background-color: #f0f0f0; 
+        margin-bottom: 1%;
+        position: relative; 
+        display: flex;
+        flex-direction: column; 
+    }
+
+    #card-right {
+        text-align: center;
+    }
+
+    #card-down {
+        text-align: center;
+        width: 47.5%;
+        margin-left: 0.5%; 
+        box-shadow: 10px 10px 15px 15px rgba(101, 101, 101, 0.984);
+        border-radius: 8px;
+        padding: 20px; 
+        background-color: #f0f0f0; 
+        margin-bottom: 8%;
+        position: relative; 
+        display: flex;
+        flex-direction: column; 
+
+    }
+
+    #foto {
+        padding: 10px 15px;
+        background-color: #ffffff;
+        color: #000000; 
+        border: 2px solid #000000; 
+        border-radius: 8px;
+        cursor: pointer;
+        align-self: center;
+        transition: 0.7s;
+    }
+
+    #foto:hover {
+        background-color: #000000; 
+        color: #ffffff; 
+        border-color: #ffffff; 
+    }
+
+    #textAdd {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: rgb(0, 79, 168);
+        transition: 0.7s;
+        font-size: 24px;
+        border: 2px solid black;
+        border-radius: 8px;
+        width: 75%;
+        margin-left: 13%;
+    }
+
+    #textAdd:hover {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: rgb(255, 255, 255);
+        background-color: black;
+        border: 3px solid white;
+    }
+
+    @media only screen and (max-width: 768px) {
+        #card-left,
+        #card-right {
+            width: 100%; 
+        }
+        #card-down{
+            margin-bottom: 25%;
+            margin-left: 1.5%;
+            width: 97%;
+        }
+        #card-left {
+            margin-bottom: 3%; 
+        }
+
+        .opicanie-item {
+            font-size: 15px;
+            margin: 0;
+        }
+    }
+
+    .status-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .opicanie {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; 
+    }
+    .opicanie-item {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 25px;
+        margin: 0 10px; 
+    }
+    .xzxz{
+        color: black; 
+        font-weight: bold; 
+        font-size: 20px;
+        transition: 0.3s;
+    }
+    .xzxz:hover{
+        color: rgb(0, 119, 255);
+    }
+
+
+</style>
+
+<h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Добро пожаловать, {{ user.nickname }}</h1>
+<div id="card-container">
+    
+    <div id="card-left">
+        {% if user.image %}
+            <img style="margin-left: auto; margin-right: auto; display: block; margin-top: 2%; margin-bottom: 1%; width: 20vw; height: 20vw; border-radius: 100%; border: 3px solid black;" src="{{ user.image.url }}" alt="User Avatar" />
+        {% endif %}
+
+        <form class="custom-file-upload" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file-upload">
+                <div id="foto">
+                <span style="font-size: 24px;">&#128247;</span>
+                </div>
+                <input id="file-upload" type="file" name="image" class="custom-file-input" style="display: none;" />
+            </label>
+            <button type="submit">
+                <span style="font-size: 24px;">&#128190;</span>
+            </button>
+        </form> 
+        
+        <h3 style="text-align: center;">Изменить никнейм:</h3>
+        
+        <div>
+            <form style="text-align: center;" method="post">
+                {% csrf_token %}
+                <label style="font-weight: bold;" >Новый никнейм:</label><br>
+                <input required style="width: 40%; border-radius: 8px; border: none" type="text" id="nickname" name="nickname"><br><br>
+                <button style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" type="submit">Сохранить</button>
+            </form>
+            <form style="text-align: center; margin-top: 5%;" method="post">
+                {% csrf_token %}
+                <label style="font-weight: bold;">Ключевое слово для восстанавления пароля:</label><br>
+                <input required style="width: 40%; border-radius: 8px; border: none" type="text" id="nickname" name="key"><br><br>
+                <button style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" type="submit">Сохранить</button>
+            </form>
+        </div>
+
+        <div class="status-container">
+            <form id="onlineForm" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="checkbox" id="is_online" name="is_online" {% if user.is_online %}checked{% endif %} onchange="submitForm()">
+                <label for="is_online">В сети</label><br><br>
+            </form>
+        </div>
+        <div class="opicanie">
+            <p class="opicanie-item">Ранг: {{ user.status }}</p>
+            <p class="opicanie-item">Количество сообщений: {{ statements_count }}</p>
+        </div>
+    </div>
+    
+    <div id="card-right">   
+        <p style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 25px;">Ваши группы:</p>
+        {% for group in user.groups.all %}
+        <a style="text-decoration: none;" href="{% url 'group' group_id=group.id %}">
+                <p class="xzxz">{{ group.name }}</p>
+        </a>
+        {% empty %}
+            <p style="font-weight: bold;">Вы не состоите в группах</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="card-down">
+    <a style="text-decoration: none" href="{% url 'posts' %}">
+        <p id="textAdd">Перейти к постам</p>
+    </a>
+    <a style="text-decoration: none" href="{% url 'addPost' %}">
+        <p id="textAdd">Перейти к созданию поста</p>
+    </a>
+    <p style="font-weight: bold;">Ваши посты:</p>
+    {% for post in posts %}
+        <div>
+            <a style="text-decoration: none;" href="{% url 'postPage' post_id=post.id %}">
+                <p>{{ post.name }}</p>
+            </a>
+
+            <form action="{% url 'deletePost' post_id=post.id %}" method="post">
+                {% csrf_token %}
+                <button style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" type="submit">Удалить</button>
+            </form>
+
+        </div>
+        {% empty %}
+            <p style="font-weight: bold;">Пока нет постов</p>
+    {% endfor %}
+</div>
+
+<script>
+    document.getElementById('is_online').addEventListener('change', function() {
+        var formData = new FormData();
+        formData.append('is_online', this.checked ? 'on' : '');
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '{% url "account" %}', true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log('Статус успешно обновлен');
+            }
+        };
+        xhr.send(formData);
+    });
+</script>
+    
+{% endblock %}

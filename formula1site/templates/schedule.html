@@ -1,0 +1,62 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    .personal-score-container {
+        margin: 0 auto 150px auto;
+        margin-top: 2%;
+        width: 95%;
+        padding: 20px;
+        border: none;
+        border-radius: 18px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+    .personal-score-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 18px;
+        overflow: hidden;
+    }
+    .table thead {
+        color: rgb(0, 0, 0);
+    }
+    .table th, .table td {
+        padding: 12px 15px;
+        text-align: center;
+    }
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+  </style>
+
+  <div class="personal-score-container">
+    <h2 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Расписание</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Этап</th>
+          <th>Время</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for el in schedule %}
+          <tr>
+            <td>{{ el.stage }}</td>
+            <td>{{ el.time }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

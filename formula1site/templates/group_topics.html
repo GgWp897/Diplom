@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    
+.group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    height: 140px;
+    margin-bottom: 2%; 
+    background-color: white;
+}
+
+.group-info {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.group-avatar {
+    width: 7vw;
+    height: 7vw;
+    border-radius: 50%;
+    background-color: rgb(0, 45, 95);
+}
+
+.group-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.group-actions {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; 
+}
+
+.group-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
+.join-btn:hover {
+    background-color: #1dc942;
+}
+
+.leave-btn {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+}
+
+.leave-btn:hover {
+    background-color: #ff0019;
+}
+
+.discussions-link-container {
+    background-color: rgb(0, 0, 0); 
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.discussions-link {
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: bold;
+}
+
+.discussions-link:hover {
+    color: #007bff;
+}
+
+.group-name {
+    font-size: 28px;
+    background-color: white;
+    border-radius: 18px;
+    padding: 2px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.group-subscribers {
+    font-size: 20px;
+    color: #000000;
+    margin-top: 8px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: white;
+    border-radius: 18px;
+    padding: 2px;
+    text-align: center;
+}
+
+.memes-section {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.memes-section h2 {
+    margin-top: 0;
+    font-size: 24px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.meme-item {
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.discussion-list {
+    margin-left: 35px; 
+    width: 95%;
+}
+
+.meme-item:last-child {
+    border-bottom: none;
+}
+
+
+ol {
+    list-style-type: none;
+    counter-reset: topic-counter;
+    padding-left: 0;
+}
+
+#spisok {
+    counter-increment: topic-counter;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.185);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    transition: box-shadow 0.5s ease;
+}
+
+#spisok:hover {
+    counter-increment: topic-counter;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.295);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #007bff;
+}
+
+@media screen and (max-width: 720px) {
+    .group-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        height: auto;
+    }
+
+    .group-info {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .group-avatar {
+        width: 12.5vw;
+        height: 12.5vw;
+    }
+
+    .group-name {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .group-subscribers {
+        font-size: 14px;
+    }
+
+    .group-actions {
+        flex-direction: row;
+        align-items: center;
+        margin-left: 10px;
+        margin-top: 0;
+    }
+
+    .group-actions button {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .discussions-link-container {
+        margin: 10px 0;
+        padding: 5px;
+    }
+
+    .discussions-link {
+        font-size: 14px;
+    }
+
+    .memes-section {
+        padding: 10px;
+    }
+
+    .meme-item {
+        font-size: 16px;
+    }
+    .discussion-list {
+        margin-left: 15px;
+    }
+    
+}
+
+</style>
+
+<div class="group-header" style="background-image: url('{{ group.imageHead.url }}');">
+    <div class="group-info">
+        <img class="group-avatar" src="{{ group.imageAvatar.url }}">
+        <div class="group-details">
+            <div class="group-name">{{ group.name }}</div>
+            <div class="group-subscribers">Подписчиков: {{ group.memberships.count }}</div>
+        </div>
+    </div>
+    <div class="discussions-link-container">
+        <a href="{% url 'group_topics' group.id %}" class="discussions-link">Перейти к обсуждениям</a>
+    </div>
+    <div class="group-actions">
+        {% if is_member %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="leave_group" class="leave-btn">Выйти из группы</button>
+            </form>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="join_group" class="join-btn">Вступить в группу</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; margin-left: 2%;">Обсуждения группы: {{ group.name }}</h1>
+
+<div class="discussion-list">
+    <ol>
+        {% for topic in discussion_topics %}
+        <a href="{% url 'discussionTopic' topic.id %}">
+            <li id="spisok">
+                <p style="text-align: center; font-weight: bold; font-size: 30px;">{{ topic.title }}</p>
+                <p style="text-align: center; font-weight: bold; font-size: 20px;">{{ topic.content }}</p>
+            </li>
+        </a>
+        {% endfor %}
+    </ol>
+</div>
+
+{% endblock %}

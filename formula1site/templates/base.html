@@ -1,0 +1,594 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+
+.main-card {
+    display: flex;
+    justify-content: space-around;
+    gap: 2%;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin-bottom: 10%;
+    margin-left: 2.5%;
+    margin-top: 0.5%;
+    box-shadow: 3px 3px 5px 5px rgba(0, 0, 0, 0.623);
+    width: 95%;
+    background-color: #f0f0f000;
+    border-radius: 5px;
+    
+}
+
+.set-card{
+    display: flex;
+    justify-content: space-around;
+    gap: 2%;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.card {
+  background-color: #00000000;
+    width: 100%;
+    height: 250px;
+    margin-top: 2%;
+    overflow: hidden; 
+    transition: transform 0.3s; 
+    border-top: 3px solid rgb(0, 0, 0);
+    border-bottom: 3px solid rgb(0, 0, 0);
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    
+}
+
+
+#text{
+    color: rgb(0, 45, 95);
+    margin-bottom: 5%;
+    margin-top: -2%;
+    height: 55px;
+    width: 74%;
+    margin-left: 23%;
+    overflow: hidden;
+    min-height: auto;
+
+}   
+
+.card:hover {
+    transform: scale(1.05); 
+}
+
+.content {
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    padding: 15px; 
+}
+
+.img {
+  border-radius: 5px;
+    width: 50%;
+    margin-left: -50%;
+    margin-top: -10%;
+}
+
+#button {
+    display: block;
+    width: 30%;
+    margin-top: -5%; 
+    margin-left: 55%;
+    padding: 3px;
+    background-color: rgb(0, 45, 95);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+#button:hover {
+    background-color: rgb(0, 75, 160);
+}
+
+#lable{
+    font-size: 3.3vw;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white; 
+    margin-left: 45.5%;
+    margin-top: -0.3%;
+}
+
+#vk{
+    text-decoration: none; 
+    color: white; 
+    font-size: 1.5vw; 
+    margin-left: 30%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top: 1%;
+}
+
+#tg{
+    text-decoration: none; 
+    color: white; 
+    font-size: 1.5vw; 
+    margin-left: 1%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top: 1%;
+}
+
+#vk:hover, #tg:hover{
+    color: red;
+}
+
+footer{
+  width: 100%; 
+  text-align: center;
+  height: 1vw; 
+  background-color: rgb(0, 45, 95);
+  display: flex;
+  position: fixed;
+  min-height: 100px;
+  padding: 0px 10px;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10000;
+  bottom: 0;
+}
+
+
+.footer p {
+  color: #fff;
+  margin: 15px 0 10px 0;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+@media screen and (max-width: 600px) {
+  #footer {
+    width: 100%; 
+    text-align: center;
+    height: 50px;
+    text-align: center;
+  }
+
+  #lable{
+   font-size: 25px; 
+   margin-top: 3%;
+  }
+
+  #vk{
+    text-decoration: none; 
+    color: white; 
+    font-size: 20px; 
+    margin-left: 5%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top: 4%;
+    }
+
+    #tg{
+    text-decoration: none; 
+    color: white; 
+    font-size: 20px; 
+    margin-left: 5%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top: 4%;
+    }
+
+    .img {
+      border-radius: 18px;
+    width: 60%; 
+    margin-left: -5%;
+    margin-top: 3%;
+  }
+
+  #text{
+    margin-left: 10%;
+    margin-bottom: -1%;
+  }
+
+  #button {
+    margin-top: 15px; 
+    margin-left: 23%;
+    margin-bottom: -20%;
+    font-size: 20px;
+    width: 50%;
+    border-radius: 5px;
+  }
+
+  #filterButton{
+    margin-left: 8px;
+  }
+
+  #xz {
+  width: 250px;
+}
+
+#input{
+  margin-left:-130px;
+}
+
+}
+
+#h1 {
+  margin-top: 1%;
+  margin-bottom: 0%;
+  text-align: center;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.image {
+  margin-right: 20px; 
+  margin-top: 2%;
+  width: 50%; 
+  margin-left: 25%;
+  border-radius: 18px;
+}
+
+.text-container {
+  white-space: pre-line; 
+  max-width: 100%; 
+  text-align: justify;
+  width: 60%;
+  margin-left: 20%;
+  margin-bottom: 150px;
+}
+
+#filterButton{
+  border-radius: 18px;
+}
+
+.social-icon,
+.menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  margin-right: 40px;
+  flex-wrap: wrap;
+}
+
+.social-icon__item,
+.menu__item {
+  list-style: none;
+}
+
+.social-icon__link {
+  font-size: 2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+}
+
+.social-icon__link:hover {
+  transform: translateY(-10px);
+}
+
+.menu__link {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+  text-decoration: none;
+  opacity: 0.75;
+  font-weight: 300;
+}
+
+.menu__link:hover {
+  opacity: 1;
+}
+
+.messenger_card {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: -3%;
+    padding-bottom: 100px; 
+}
+
+.title {
+    text-align: center;
+    color: #000000;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.subtitle {
+    color: #555;
+}
+
+.section-title {
+    text-align: center;
+    color: #333;
+}
+
+.message-form {
+    text-align: center;
+}
+
+.message-form-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff00;
+  box-sizing: border-box;
+  z-index: 1; 
+  margin-bottom: 75px;
+
+}
+
+.file-input {
+    margin-top: 10px;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.file-input-wrapper {
+  position: relative;
+}
+
+.file-input-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#file-not-selected {
+  display: none;
+}
+
+#camera-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+}
+
+#new_title{
+  background-color: rgb(0, 45, 95);
+  border: none;
+  color: white;
+  font-size: 25px;
+  border-radius: 18px;
+  padding: 10px;
+  margin-left: 55%;
+  margin-top: 10px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#new_title:hover{
+  background-color: rgb(0, 75, 160);
+}
+
+.message {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: white;
+}
+
+.user-message {
+  background-color: rgb(0, 75, 160);
+}
+
+.other-user-message {
+  background-color: rgb(0, 45, 95);
+}
+
+.message-image {
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+.user-info {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.filter-form {
+  margin-top: 20px;
+  margin-left: 35.5%;
+}
+
+#xz {
+  width: 650px;
+  height: 4vw;
+  border: 2px solid black;
+  border-radius: 19px;
+  line-height: 1.5;
+  padding-top: 1.2vw;
+  padding-left: 0.5vw;
+  resize: none;
+}
+
+.filter-form form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-form button {
+  background-color: rgb(0, 45, 95);
+  color: white;
+  text-align: center;
+  margin-top: -10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.filter-form button:hover {
+  background-color: rgb(0, 75, 160);
+}
+
+#input{
+  border: 2px solid black; 
+  border-radius: 20px; 
+  width: 350px; 
+  height: 50px; 
+  font-size: 25px; 
+  text-align: center; 
+  color: rgb(0, 0, 0); 
+  margin-left: 40.73%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+#title_input{
+  text-decoration: none; 
+  color: black; 
+  font-weight: bold; 
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  display: block;
+  transition: 0.2s;
+}
+
+#title_input:hover{
+  color: rgb(0, 79, 168);
+}
+
+#go_back:hover{
+  background-color: black;
+  color: white;
+  
+}
+
+body {
+  background: url("https://sun9-35.userapi.com/impg/hran6sha5nAYrrltTXUPWwI0YZrNCI0BEKdlRQ/kdPMuwH7myQ.jpg?size=2560x1707&quality=96&sign=28bf77feca8cf7ec7a7596fa3cc99ebb&type=album") no-repeat center center fixed;
+}
+
+.fade-in-right {
+  animation: fadeInRight 1.5s ease-out;
+}
+
+    .navbar-nav .nav-link {
+      transition: 0.3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+      transform: scale(1.05); 
+    }
+
+    .navbar-toggler {
+      background-color: white;
+      border: none;
+    }
+
+
+</style>
+</head>
+<body>
+
+{% block header %}
+<header class="fade-in-left">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(0, 45, 95); font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 25px;">
+    <div class="container-fluid">
+      <button style="margin-left: 85%;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" style="color: white;" aria-current="page" href="{% url 'account' %}">ПРОФИЛЬ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" href="{% url 'news' %}">НОВОСТИ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" href="{% url 'contacts' %}">КОНТАКТЫ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white;" href="{% url 'logout' %}">ВЫЙТИ</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              ЕЩЁ
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'schedule' %}">Расписание</a></li>
+              <li><a class="dropdown-item" href="{% url 'groups' %}">Группы</a></li>
+              <li><a class="dropdown-item" href="{% url 'standingsPilots' %}">Личный зачёт</a></li>
+              <li><a class="dropdown-item" href="{% url 'standingsConstructors' %}">Кубок конструкторов</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script>
+        $(document).ready(function() {
+        $('.burger').click(function(){
+        $('header').toggleClass('clicked');
+        });
+        $('nav ul li').click(function(){
+        $('nav ul li').removeClass('selected');
+        $('nav ul li').addClass('notselected');
+        $(this).toggleClass('selected');
+        $(this).removeClass('notselected');
+        });
+        });
+        </script>
+{% endblock %}
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
+{% block content %}
+{% endblock %} 
+
+<footer class="footer fade-in-right">
+  <ul class="social-icon">
+    <li class="social-icon__item"><a class="social-icon__link" href="https://github.com/GgWp897">
+        <ion-icon name="logo-github"></ion-icon>
+      </a></li>
+    <li class="social-icon__item"><a class="social-icon__link" href="https://vk.com/ggwpwarrior">
+        <ion-icon name="logo-vk"></ion-icon>
+      </a></li>
+  </ul>
+  <p>&copy;2024 GgWp897 | Все права защищены</p>
+</footer> 
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

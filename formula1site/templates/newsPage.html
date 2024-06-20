@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+  <h1 id="h1">{{ news.name }}</h1>
+  <div class="image-container">
+    <img src="{{ news.img.url }}" alt="{{ news.name }}" class="image"/>
+  </div>
+  <div class="text-container">
+    <text>{{ news.text }}</text>
+    {% if news.video %}
+      <video controls style="margin-left: 26%; margin-top: 1%;">
+        <source src="{{ news.video.url }}" type="video/mp4">
+      </video>
+    {% endif %}
+  </div>
+
+
+</div>
+{% endblock %}

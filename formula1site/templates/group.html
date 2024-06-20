@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    height: 140px;
+    margin-bottom: 2%; 
+    background-color: white;
+}
+
+.group-info {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.group-avatar {
+    width: 7vw;
+    height: 7vw;
+    border-radius: 50%;
+    background-color: rgb(0, 45, 95);
+}
+
+.group-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.group-actions {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; 
+}
+
+.group-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
+.join-btn:hover {
+    background-color: #1dc942;
+}
+
+.leave-btn {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+}
+
+.leave-btn:hover {
+    background-color: #ff0019;
+}
+
+.discussions-link-container {
+    background-color: rgb(0, 0, 0); 
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.discussions-link {
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.discussions-link:hover {
+    color: #007bff;
+}
+
+.group-name {
+    font-size: 28px;
+    background-color: white;
+    border-radius: 18px;
+    padding: 2px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.group-subscribers {
+    font-size: 20px;
+    color: #000000;
+    margin-top: 8px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: white;
+    border-radius: 18px;
+    padding: 2px;
+    text-align: center;
+}
+
+    .memes-section {
+        text-align: center;
+        background-color: #ffffff00;
+        margin-bottom: 130px;
+        padding: 20px;
+        box-shadow: 3px 3px 5px 5px rgba(0, 0, 0, 0.623);
+        width: 90%;
+        margin-left: 5%;
+    }
+
+    .memes-section h2 {
+        margin-top: 0;
+        font-size: 24px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .meme-item {
+        font-size: 25px;
+        padding: 10px;
+        background-color: #ffffff;
+        margin-top: 20px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px 5px rgba(101, 101, 101, 0.984);
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+
+    .meme-item:last-child {
+        border-bottom: none;
+    }
+
+    @media screen and (max-width: 600px) {
+        .group-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            height: auto;
+        }
+
+        .group-info {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .group-avatar {
+            width: 12.5vw;
+            height: 12.5vw;
+        }
+
+        .group-name {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .group-subscribers {
+            font-size: 14px;
+        }
+
+        .group-actions {
+            flex-direction: row;
+            align-items: center;
+            margin-left: 10px;
+            margin-top: 0;
+        }
+
+        .group-actions button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .discussions-link-container {
+            margin: 10px 0;
+            padding: 5px;
+        }
+
+        .discussions-link {
+            font-size: 14px;
+        }
+
+        .memes-section {
+            padding: 10px;
+        }
+
+        .meme-item {
+            font-size: 18px;
+        }
+    }
+</style>
+
+<div class="group-header" style="background-image: url('{{ group.imageHead.url }}');">
+    <div class="group-info">
+        <img class="group-avatar" src="{{ group.imageAvatar.url }}">
+        <div class="group-details">
+            <div class="group-name">{{ group.name }}</div>
+            <div class="group-subscribers">Подписчиков: {{ group.memberships.count }}</div>
+        </div>
+    </div>
+    <div class="discussions-link-container">
+        <a href="{% url 'group_topics' group.id %}" class="discussions-link">Перейти к обсуждениям</a>
+    </div>
+    <div class="group-actions">
+        {% if is_member %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="leave_group" class="leave-btn">Выйти из группы</button>
+            </form>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="join_group" class="join-btn">Вступить в группу</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="memes-section">
+    {% for el in memes %}
+    <div class="meme-item" id="meme-{{ el.id }}">
+        <p>{{ el.text }}</p>
+        {% if el.image %}
+            <img style="width: 50%; border-radius: 5px;" src="{{ el.image.url }}" alt="Meme Image">
+        {% endif %}
+        <br>
+        <button style="border: none; background-color: white;" class="heart-btn" data-meme-id="{{ el.id }}">
+            {% if user in el.likes.all %}
+                <i class="fas fa-heart liked"></i>
+            {% else %}
+                <i class="far fa-heart"></i>
+            {% endif %}
+        </button>
+        <span class="like-count">{{ el.likes.count }}</span>
+    </div>
+    {% empty %}
+    <p>Админ ничего не добавил 😔</p>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.heart-btn').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let memeId = this.getAttribute('data-meme-id');
+            let xhr = new XMLHttpRequest();
+            let url = "{% url 'like_meme' %}";
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    let memeItem = document.getElementById('meme-' + memeId);
+                    memeItem.querySelector('.like-count').innerText = response.likes_count;
+                    let heartIcon = memeItem.querySelector('.heart-btn i');
+                    if (response.liked) {
+                        heartIcon.classList.remove('far');
+                        heartIcon.classList.add('fas', 'liked');
+                    } else {
+                        heartIcon.classList.remove('fas', 'liked');
+                        heartIcon.classList.add('far');
+                    }
+                }
+            };
+            xhr.send('meme_id=' + memeId);
+        });
+    });
+});
+</script>
+{% endblock %}

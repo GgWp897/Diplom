@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>
+
+<style>
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    #map {
+        height: 300px; 
+        width: 100%; 
+        border-radius: 18px;
+        border: 5px solid black;
+        margin-bottom: 20px;
+    }
+    .contact-info {
+        font-size: 18px;
+        text-align: center;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+    .contact-info p, .contact-info a {
+        margin: 5px 0;
+        text-decoration: none;
+
+    }
+
+    @media only screen and (max-width: 640px) {
+        .content-container {
+            margin-bottom: 25%;
+    }
+    }
+</style>
+
+<div class="content-container">
+    <h2 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Мы расположены тут</h2>
+    <div id="map"></div>
+    <div class="contact-info">
+        <p>Связь с нами:</p>
+        <p>Почта: <a href="mailto:eokhinmaksi58@gmail.com">eokhinmaksi58@gmail.com</a></p>
+        <p>Телефон: <a href="tel:+79687470741">+7 (968) 747-07-41</a></p>
+        <p>Социальные сети:</p>
+        <p>
+            <a href="https://vk.com" target="_blank">ВКонтакте</a> |
+            <a href="https://facebook.com" target="_blank">Facebook</a> | 
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var map = L.map('map').setView([55.759598, 37.849724], 15); 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+        var marker = L.marker([55.759598, 37.849724]).addTo(map);
+    });
+</script>
+
+{% endblock %}

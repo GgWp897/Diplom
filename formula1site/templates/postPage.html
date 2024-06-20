@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .post-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 120px;
+    }
+
+    .post-title {
+        font-size: 28px;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: #000000;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .post-text {
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 20px;
+        text-align: justify; 
+        white-space: pre-wrap; 
+
+
+    }
+
+    .post-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        display: block;
+        margin: 0 auto 20px;
+    }
+
+    .comment-form {
+        margin-top: 30px;
+    }
+
+    .comment-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        resize: vertical;
+    }
+
+    .comment-form button[type="submit"] {
+        background-color: rgb(0, 75, 160);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 18px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .comment-form button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .comments-section {
+        margin-top: 40px;
+    }
+
+    .comments-section h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .comment {
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .comment p {
+        margin: 0;
+    }
+
+    .comment-author {
+        font-size: 14px;
+        color: #999;
+        margin-top: 10px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .post-container{
+            margin-bottom: 120px;
+        }
+    }
+</style>
+
+<div class="post-container">
+    <div class="post-title">{{ post.name }}</div>
+    <div class="post-text">{{ post.text }}</div>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.name }}" class="post-image">
+    {% endif %}
+
+    <div class="comment-form">
+        <form method="post" action="{% url 'postPage' post.id %}">
+            {% csrf_token %}
+            <textarea name="comment_text" rows="4" placeholder="Оставьте свой комментарий"></textarea><br>
+            <button type="submit">Добавить комментарий</button>
+        </form>
+    </div>
+
+    <div class="comments-section">
+        <h2 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Комментарии</h2>
+        {% for el in comments %}
+            <div class="comment">
+                <p>{{ el.text }}</p>
+                <p class="comment-author">Автор: {{ el.user.nickname }}, Дата: {{ el.date }}</p>
+            </div>
+        {% empty %}
+            <p>Пока нет комментариев.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

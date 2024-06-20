@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+    .filter-form-container {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+    
+    #filterForm {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: flex-end;
+    }
+    
+    #filterButton {
+        padding: 10px 20px;
+        border-radius: 3.5px;
+        background-color: rgb(0, 45, 95);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.7s;
+    }
+
+    #filterButton:hover {
+        background-color: rgb(0, 75, 160);
+
+    }
+
+    @media (max-width: 768px) {
+        .main-card{
+            margin-bottom: 30%;
+        }
+        #filterForm {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+        }
+        
+        #filterForm.show {
+            display: flex;
+        }
+
+        #toggleFilterButton {
+            display: block;
+        }
+    }
+
+    @media (min-width: 769px) {
+        #toggleFilterButton {
+            display: none;
+        }
+    }
+</style>
+
+<div style="margin-top: 1px;">
+    <div class="filter-form-container">
+        <button id="toggleFilterButton" type="button" style="padding: 10px 20px; border-radius: 3.5px; background-color: rgb(0, 45, 95); color: white; border: none; cursor: pointer;">
+            Показать/Скрыть фильтры
+        </button>
+        <form id="filterForm" method="get" action="{% url 'news' %}">
+            <div style="flex: 1;">
+                <input type="text" name="q" placeholder="Поиск по тегам" value="{{ request.GET.q }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3.5px; height: 36px;">
+            </div>
+            <div style="flex: 1;">
+                <input type="date" name="start_date" value="{{ request.GET.start_date }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3.5px; height: 36px;">
+            </div>
+            <div style="flex: 1;">
+                <input type="date" name="end_date" value="{{ request.GET.end_date }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3.5px; height: 36px;">
+            </div>
+            <div style="flex: 0;">
+                <button id="filterButton" type="submit">Применить фильтр</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('toggleFilterButton').addEventListener('click', function() {
+            var filterForm = document.getElementById('filterForm');
+            filterForm.classList.toggle('show');
+        });
+    </script>
+
+    <div class="main-card">
+        {% for el in news %}
+            <div class="set-card">
+                <div class="card">
+                    <div class="content">
+                        <p id="text">{{ el.name }}</p>
+                        <img class="img" src="{{ el.img.url }}" alt="{{ el.name }}">
+                        <a style="text-decoration: none;" href="{% url 'newsPage' news_id=el.id %}">
+                            <button id="button" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" type="submit">Подробней</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

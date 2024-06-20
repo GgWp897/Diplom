@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    @media only screen and (max-width: 768px) {
+        #autor{
+            font-size: 15px;
+        }
+    }
+</style>
+
+<div style="margin-top: 0%;">
+    <div class="main-card">
+        {% for el in posts %}
+            <div class="set-card">
+                <div class="card">
+                    <div class="content">
+                        <div style="display: flex;">
+                            <p id="text">{{ el.name }}</p>
+                            <p id="autor" style="width: 20%; margin-top: 30%; margin-bottom: -30%; margin-right: 0%;">{{el.user.nickname}}</p>
+                        </div>
+                        <img class="img" src="{{ el.image.url }}" alt="{{ el.name }}">
+                        <a style="text-decoration: none;" href="{% url 'postPage' post_id=el.id %}">
+                            <button id="button" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" type="submit">Подробней</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
